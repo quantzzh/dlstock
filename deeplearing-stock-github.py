@@ -78,7 +78,7 @@ class Deeplearing():
         basic_path = os.path.dirname(os.path.abspath(__file__))
         #定义存储模型的文件路径
         #os.path.join(basic_path, "stock_rnn_save.ckpt")表示在运行的python文件路径下保存，文件名为stock_rnn.ckpt，在我环境下运行总是提示“另一个程序正在使用此文件，进程无法访问”，换到其他路径就OK
-        model_save_path = r"F:\\123\\save\\stock_rnn_save.ckpt"#os.path.join(basic_path, "stock_rnn_save.ckpt")
+        model_save_path = "F:\\123\\save\\stock_rnn_save.ckpt"#os.path.join(basic_path, "stock_rnn_save.ckpt")
         #定义训练集的文件路径，当前为运行的python文件路径下，文件名为train_data.csv
         train_csv_path = os.path.join(basic_path, "train_data.csv")
         #定义测试集的文件路径，当前为运行的python文件路径下，文件名为test_data.csv
@@ -167,7 +167,7 @@ class Deeplearing():
         saver = tf.train.Saver()
         #获取数据（这是我们自己定义的类）
         data_get = get_stock_data()
-        #设置GPU按需增长，在多个GPU时，能更多地占用资源
+        #设置tf按需使用GPU资源，而不是有多少就占用多少
         config = tf.ConfigProto()
         config.gpu_options.allow_growth = True
         #使用with，保证执行完后正常关闭tf
@@ -321,14 +321,14 @@ class Deeplearing():
         correct_prediction = tf.equal(tf.argmax(y_pre, 1), tf.argmax(input_y, 1))
         accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
 
-        #用以保存参数的函数（跑完下次再跑，就可以直接读取上次跑的结果而不必重头开始）
+        #用以保存参数的函数（跑完下次再跑，就可以直接读取上次跑的结果而不必从头开始）
         saver = tf.train.Saver(tf.global_variables())
         
         #tf要求必须如此定义一个init变量，用以在初始化运行（也就是没有保存模型）时加载各个变量
         init = tf.global_variables_initializer()
         #获取数据（这是我们自己定义的类）
         data_get = get_stock_data()
-        #设置GPU按需增长，在多个GPU时，能更多地占用资源
+        #设置tf按需使用GPU资源，而不是有多少就占用多少
         config = tf.ConfigProto()
         config.gpu_options.allow_growth = True
 
