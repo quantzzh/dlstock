@@ -30,7 +30,7 @@ class get_stock_data():
         if all_data_path is None:
             all_data_path = os.path.join(basic_path, "all_data.csv")
         #读取原始数据，只保留需要使用的列
-        total_data = pd.read_csv(orgin_data_path, usecols=["open_hfq", "high_hfq", "low_hfq", "close_hfq", "turnover", "volume", "cir_market_value", "stock_date", "stock_num"])
+        total_data = pd.read_csv(r'D:\Program Files (x86)\PycharmProjects\untitled\data\origin_data.csv', usecols=["open_hfq", "high_hfq", "low_hfq", "close_hfq", "turnover", "volume", "cir_market_value", "stock_date", "stock_num"])
         #根据股票代码排序，相同的股票代码按照交易日期排序。
         #inplace参数表示不需要返回排序后的结果，直接覆盖原变量即可
         total_data.sort_values(by = ['stock_num', 'stock_date'], inplace = True)
